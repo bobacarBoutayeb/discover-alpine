@@ -1,2 +1,2 @@
-# discover-alpine
-Pierre, feuille, ciseau
+# Papier-caillou-ciseau
+Pierre, feuille, ciseau✂️
