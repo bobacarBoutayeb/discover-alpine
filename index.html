@@ -21,25 +21,83 @@
         </header>
         <main>
 <!--            <div x-data="{ isOpen: true }">-->
-            <div>
+            <div
+                    x-data="{
+                    playerChoice: null,
+                    computerChoice: null}
+            "
+            >
 <!--                <button x-on:click="isOpen = !isOpen"> Toggle </button>-->
 <!--                <h2 x-show = "isOpen" class="text-center border">Les outils pour votre crime :</h2>-->
                 <h2 class="text-center border">Les outils pour votre crime :</h2>
-                <div class="d-flex justify-content-around">
-                        <img src="rock.svg" width="30%" alt="rock" id="rock">
-                        <img src="cissors.svg" width="30%" alt="cissors" id="cissors">
-                        <img src="paper.svg" width="30%" alt="paper" id="paper">
+                <div class="d-flex justify-content-around" id="tools">
+                        <img src="rock.svg" width="30%" alt="rock" id="rock"
+                             x-on:click="playerChoice = 'rock'; computerChoice = getComputerChoice()"
+                        >
+                        <img src="scissors.svg" width="30%" alt="scissors" id="scissors"
+                             x-on:click="playerChoice = 'scissors'; computerChoice = getComputerChoice()"
+                        >
+                        <img src="paper.svg" width="30%" alt="paper" id="paper"
+                             x-on:click="playerChoice = 'paper'; computerChoice = getComputerChoice()"
+                        >
                 </div>
                 <div id="userChoice">
+                    <template x-if="playerChoice">
+                        <h3 x-text="'Choix du joueur: ' + playerChoice"></h3>
+                    </template>
                 </div>
                 <div id="computerChoice">
+                    <template x-if="playerChoice">
+                        <h3 x-text="'Choix de l\'ordinateur: ' + computerChoice"></h3>
+                    </template>
                 </div>
                 <div id="result">
+                    <h3 x-text="'Résultat: ' + findWinner(playerChoice,computerChoice)"></h3>
                 </div>
             </div>
         </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script>
+        function getComputerChoice()
+        {
+            // Random number between 0 and 2 (inclusive)
+            let computerRandomNumber = Math.floor(Math.random() * 3);
+
+            let picks = ['rock', 'paper', 'scissors'];
+
+            // Suivant le résultat, la fonction doit retourner une valeur
+            // parmi {'rock', 'paper', 'scissors'}.
+            return picks[computerRandomNumber];
+        }
+
+        function findWinner(playerChoice, computerChoice) {
+
+            if (playerChoice === computerChoice) {
+                return 'Tied';
+            }
+
+            if (playerChoice === 'rock') {
+                if (computerChoice === 'scissors') {
+                    return 'Won';
+                }
+            }
+
+            if (playerChoice === 'paper') {
+                if (computerChoice === 'rock') {
+                    return 'Won';
+                }
+            }
+
+            if (playerChoice === 'scissors') {
+                if (computerChoice === 'paper') {
+                    return 'Won';
+                }
+            }
+
+            return 'Lost';
+        }
+    </script>
 </body>
 </html>
